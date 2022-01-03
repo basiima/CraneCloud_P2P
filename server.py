@@ -1,8 +1,6 @@
 from constants import *
 
 class Server:
-
-
     def __init__(self, sample_msg):
         try:
             self.sample_msg = sample_msg
@@ -24,6 +22,7 @@ class Server:
         except Exception as e:
             sys.exit()
 
+
     def run(self):
         while True:
             network, packet = self.s.accept()
@@ -37,6 +36,7 @@ class Server:
             print("{}, connected".format(packet))
             print("-" * 50)
 
+
     def send_peers(self):
         peer_list = ""
         for peer in self.peers:
@@ -46,22 +46,22 @@ class Server:
             data = PEER_BYTE + bytes(peer_list, 'utf-8')
             network.send(PEER_BYTE + bytes(peer_list, 'utf-8'))
 
-    def controller(self, network, packet):
 
+    def controller(self, network, packet):
         try:
             while True:
-                data = network.recv(SIZE)
+                data = (network.recv(SIZE)).decode()
                 for network in self.networks:
-
-                    if data and data.decode('utf-8')[0].lower() == 'q':
-
+                    if data == "discover":
+                        resp = "LIST OF PEERS: {}".format(self.peers)
+                        network.send(resp.encode())
+                    elif data == "disconnect":
                         self.disconnect(network, packet)
-                        return
-                    elif data and data.decode('utf-8') == REQ_STRING:
-                        print(" Uploading the sample file... ")
-                        network.send(self.sample_msg)
+                    else:
+                        print(f"{packet}: {data}")
         except Exception as e:
             sys.exit()
+            
 
     def disconnect(self, network, packet):
         self.networks.remove(network)
