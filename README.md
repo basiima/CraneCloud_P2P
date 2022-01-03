@@ -17,7 +17,7 @@ Use the command ```python3 p2p.py``` to start a node or to join a network
 | `disconnect`       | -       | Disconnect from the network |
 
 #### Group Members
-- ARUHO JOAN
-- AMOKOL PRISCILLA
-- BASIIMA JULIUS
-- IBANDA ANDREW
+- AMOKOL PRISCILLA 18/U/23412/EVE
+- ARUHO JOAN 18/U/23444/EVE
+- BASIIMA JULIUS 18/U/21138/PS
+- IBANDA ANDREW 18/U/21112/PS
