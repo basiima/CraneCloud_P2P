@@ -1,4 +1,6 @@
 from constants import *
+import os.path
+from os import path
 
 class Server:
     def __init__(self, sample_msg):
@@ -55,8 +57,16 @@ class Server:
                     if data == "discover":
                         resp = "LIST OF PEERS: {}".format(self.peers)
                         network.send(resp.encode())
+
                     elif data == "disconnect":
                         self.disconnect(network, packet)
+
+                    elif data.startswith('download'):
+                        split_data = data.split()
+                        if str(path.exists(split_data[1])) == 'True':
+                            print(f"{split_data[1]} is available for download")
+                        else:
+                            print(f"{split_data[1]} does not exist on the network")
                     else:
                         print(f"{packet}: {data}")
         except Exception as e:
